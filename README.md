@@ -17,7 +17,7 @@ pnpm install @mamis/credit-card-type
 ## Example
 
 ```javascript
-import creditCardType from '@mamis/credit-card-type'
+import creditCardType from "@mamis/credit-card-type";
 
 // The card number provided should be normalized prior to usage here.
 var visaCards = creditCardType("4111");
