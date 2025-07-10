@@ -1,21 +1,23 @@
-# Credit Card Type [![Build Status](https://github.com/braintree/credit-card-type/workflows/Unit%20Tests/badge.svg)](https://github.com/braintree/credit-card-type/actions?query=workflow%3A%22Unit+Tests%22) [![npm version](https://badge.fury.io/js/credit-card-type.svg)](http://badge.fury.io/js/credit-card-type)
+# Credit Card Type
+
+> This project is a forked version of the package [braintree/credit-card-type](https://github.com/braintree/credit-card-type) — the forked package provides ESM environment support.
 
 Credit Card Type provides a useful utility method for determining a credit card type from both fully qualified and partial numbers. This is not a validation library but rather a smaller component to help you build your own validation or UI library.
 
-This library is designed for type-as-you-go detection (supports partial numbers) and is written in CommonJS so you can use it in Node, io.js, and the [browser](http://browserify.org).
+This library is designed for type-as-you-go detection (supports partial numbers) and is written in TypeScript with support for CommonJS and ESM environments
 
 ## Download
 
 To install via npm:
 
 ```bash
-npm install credit-card-type
+pnpm install @mamis/credit-card-type
 ```
 
 ## Example
 
 ```javascript
-var creditCardType = require("credit-card-type");
+import creditCardType from '@mamis/credit-card-type'
 
 // The card number provided should be normalized prior to usage here.
 var visaCards = creditCardType("4111");
@@ -103,9 +105,9 @@ A full response for a `Visa` card will look like this:
 CommonJS:
 
 ```javascript
-var creditCardType = require("credit-card-type");
-var getTypeInfo = require("credit-card-type").getTypeInfo;
-var CardType = require("credit-card-type").types;
+var creditCardType = require("@mamis/credit-card-type");
+var getTypeInfo = require("@mamis/credit-card-type").getTypeInfo;
+var CardType = require("@mamis/credit-card-type").types;
 ```
 
 ES6:
@@ -114,7 +116,7 @@ ES6:
 import creditCardType, {
   getTypeInfo,
   types as CardType,
-} from "credit-card-type";
+} from "@mamis/credit-card-type";
 ```
 
 #### Filtering
@@ -269,11 +271,4 @@ prettyCardNumber("xxxxxxxxxx343", CardType.AMERICAN_EXPRESS); // 'xxxx xxxxxx 34
 
 ### Development
 
-We use `nvm` for managing our node versions, but you do not have to. Replace any `nvm` references with the tool of your choice below.
-
-```bash
-nvm install
-npm install
-```
-
-All testing dependencies will be installed upon `npm install` and the test suite executed with `npm test`.
+All testing dependencies will be installed upon `pnpm install` and the test suite executed with `pnpm test:unit` and `pnpm test:integration`.

@@ -1,8 +1,7 @@
-src/__tests__/
-gulpfile.js
-.travis.yml
+tests/
 .eslintrc
 .eslintignore
+.gitlab-ci.yml
 .nvmrc
-bower.json
-.github
+.prettierignore
+jest.config.js

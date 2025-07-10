@@ -1,7 +1,7 @@
-.setup-npm-registry: &setup-npm-registry
-  - npm config set "@${CI_PROJECT_ROOT_NAMESPACE}:registry" "${CI_API_V4_URL}/packages/npm/"
-  - npm config set "${CI_API_V4_URL#https?}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
-  - npm config set "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
+.setup-pnpm-registry: &setup-pnpm-registry
+  - pnpm config set "@${CI_PROJECT_ROOT_NAMESPACE}:registry" "${CI_API_V4_URL}/packages/npm/"
+  - pnpm config set "${CI_API_V4_URL#https?}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
+  - pnpm config set "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
 
 stages:
   - build
@@ -18,8 +18,8 @@ build:
       - dist
       - node_modules
   script:
-    - npm install
-    - npm run build
+    - pnpm install
+    - pnpm run build
 
 test:unit:
   stage: test
@@ -28,7 +28,7 @@ test:unit:
   needs:
     - build
   script:
-    - npm run test:unit
+    - pnpm run test:unit
 
 test:integration:
   stage: test
@@ -37,7 +37,7 @@ test:integration:
   needs:
     - build
   script:
-    - npm run test:integration
+    - pnpm run test:integration
 
 npm-package:
   stage: package
@@ -48,7 +48,7 @@ npm-package:
   only:
     - tags
   before_script:
-    - *setup-npm-registry
+    - *setup-pnpm-registry
   script:
-    - npm version --no-git-tag-version ${CI_COMMIT_TAG}
-    - npm publish
+    - pnpm version --no-git-tag-version ${CI_COMMIT_TAG}
+    - pnpm publish
