@@ -1,0 +1,54 @@
+.setup-npm-registry: &setup-npm-registry
+  - npm config set "@${CI_PROJECT_ROOT_NAMESPACE}:registry" "${CI_API_V4_URL}/packages/npm/"
+  - npm config set "${CI_API_V4_URL#https?}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
+  - npm config set "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken" "${CI_JOB_TOKEN}"
+
+stages:
+  - build
+  - test
+  - package
+
+build:
+  stage: build
+  image:
+    name: registry.mamis.com.au/mamis/containers/nodejs:20
+  artifacts:
+    expire_in: 7 days
+    paths:
+      - dist
+      - node_modules
+  script:
+    - npm install
+    - npm run build
+
+test:unit:
+  stage: test
+  image:
+    name: registry.mamis.com.au/mamis/containers/nodejs:20
+  needs:
+    - build
+  script:
+    - npm run test:unit
+
+test:integration:
+  stage: test
+  image:
+    name: registry.mamis.com.au/mamis/containers/nodejs:20
+  needs:
+    - build
+  script:
+    - npm run test:integration
+
+npm-package:
+  stage: package
+  image:
+    name: registry.mamis.com.au/mamis/containers/nodejs:20
+  needs:
+    - build
+  only:
+    - tags
+  before_script:
+    - *setup-npm-registry
+  script:
+    - npm version --no-git-tag-version ${CI_COMMIT_TAG}
+    - npm publish
