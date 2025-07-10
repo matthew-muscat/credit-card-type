@@ -10,7 +10,7 @@
     }
   },
   "publishConfig": {
-    "@mamis:registry": "https://git.mamis.com.au/api/v4/projects/819/packages/npm/"
+    "@mamis:registry": "https://git.mamis.com.au/api/v4/projects/983/packages/npm/"
   },
   "scripts": {
     "lint": "eslint --ext js,ts .",
